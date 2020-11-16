@@ -15,6 +15,7 @@ import * as Record from '../../utils/Record'
 import { LinkableFragment } from '../../GeneriskeElementer/LinkableFragment';
 import Brodsmulesti from '../Brodsmulesti/Brodsmulesti';
 import './Hovedside.less';
+import Varselpanel from './Varselpanel/Varselpanel';
 
 const Hovedside: FunctionComponent<RouteComponentProps> = ({ history }) => {
     const { organisasjoner, visFeilmelding, tilgangTilSyfo, visSyfoFeilmelding } = useContext(OrganisasjonerOgTilgangerContext);
@@ -33,20 +34,23 @@ const Hovedside: FunctionComponent<RouteComponentProps> = ({ history }) => {
         <>
             <Brodsmulesti brodsmuler={[]} />
             <Banner sidetittel="Min side – arbeidsgiver" />
-            <div className="hovedside">
-                <FeilmeldingContainer
-                    visFeilmelding={visFeilmelding}
-                    visSyfoFeilmelding={visSyfoFeilmelding}
-                />
-                <Koronaboks />
-                <TjenesteBoksContainer />
-                <BrevFraAltinnContainer />
-                <NyttigForDegContainer />
-                <AltinnContainer />
-                <SkjemaveilederContainer />
-                <LinkableFragment fragment="be-om-tilgang">
-                    <BeOmTilgang/>
-                </LinkableFragment>
+            <div className="hovedside-container">
+                <div className="hovedside">
+                    <FeilmeldingContainer
+                        visFeilmelding={visFeilmelding}
+                        visSyfoFeilmelding={visSyfoFeilmelding}
+                    />
+                    <Koronaboks />
+                    <TjenesteBoksContainer />
+                    <BrevFraAltinnContainer />
+                    <NyttigForDegContainer />
+                    <AltinnContainer />
+                    <SkjemaveilederContainer />
+                    <LinkableFragment fragment="be-om-tilgang">
+                        <BeOmTilgang/>
+                    </LinkableFragment>
+                </div>
+                <Varselpanel />
             </div>
         </>
     );
