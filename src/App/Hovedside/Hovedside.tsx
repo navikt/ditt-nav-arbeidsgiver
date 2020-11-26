@@ -16,6 +16,7 @@ import { LinkableFragment } from '../../GeneriskeElementer/LinkableFragment';
 import Brodsmulesti from '../Brodsmulesti/Brodsmulesti';
 import Varsler from './varsler/Varsler';
 import './Hovedside.less';
+import AdvarselBannerTestversjon from './AdvarselBannerTestVersjon/AdvarselBannerTestversjon';
 
 const Hovedside: FunctionComponent<RouteComponentProps> = ({ history }) => {
     const { organisasjoner, visFeilmelding, tilgangTilSyfo, visSyfoFeilmelding } = useContext(OrganisasjonerOgTilgangerContext);
@@ -23,12 +24,12 @@ const Hovedside: FunctionComponent<RouteComponentProps> = ({ history }) => {
     useEffect(() => {
         const skalViseManglerTilgangBoks = !(
             Record.length(organisasjoner) > 0 || tilgangTilSyfo === Tilgang.TILGANG
-        );
+        ) && !visFeilmelding && !visSyfoFeilmelding;
 
         if (skalViseManglerTilgangBoks) {
             history.replace({ pathname: 'mangler-tilgang' });
         }
-    }, [organisasjoner, tilgangTilSyfo, history]);
+    }, [organisasjoner, tilgangTilSyfo, history, visFeilmelding, visSyfoFeilmelding]);
 
     return (
         <>
@@ -37,7 +38,8 @@ const Hovedside: FunctionComponent<RouteComponentProps> = ({ history }) => {
             <div className="hovedside-container">
                 <Varsler />
                 <div className="hovedside">
-                    <FeilmeldingContainer
+                    <AdvarselBannerTestversjon/>
+                <FeilmeldingContainer
                         visFeilmelding={visFeilmelding}
                         visSyfoFeilmelding={visSyfoFeilmelding}
                     />

@@ -5,12 +5,14 @@ export const skjemaForArbeidsgivere = 'https://www.nav.no/soknader/nb/bedrift';
 
 export const arbeidsforholdLink = gittMiljo({
     prod: 'https://arbeidsgiver.nav.no/arbeidsforhold/',
+    labs: 'https://arbeidsgiver.labs.nais.io/arbeidsforhold/',
     other: 'https://arbeidsgiver-q.nav.no/arbeidsforhold/',
 });
 
 export const syfoLink = gittMiljo({
     prod: 'https://tjenester.nav.no/sykefravaerarbeidsgiver',
     other: 'https://tjenester-q1.nav.no/sykefravaerarbeidsgiver',
+    labs: 'https://sykefravaerarbeidsgiver.labs.nais.io/sykefravaerarbeidsgiver/'
 });
 
 export const linkTilArbeidsplassen = gittMiljo({
@@ -76,7 +78,13 @@ export const lenkeTilDittNavPerson = 'https://www.nav.no/person/dittnav/';
 export const lenkeTilTilgangsstyringsInfo =
     'https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring';
 
-export const lenkeTilSykefravarsstatistikk = '/sykefravarsstatistikk/';
+
+export const lenkeTilSykefravarsstatistikk = gittMiljo({
+    prod: 'https://arbeidsgiver.nav.no/sykefravarsstatistikk/',
+    labs: 'https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk/',
+    other: 'https://arbeidsgiver-q.nav.no/sykefravarsstatistikk/',
+});
+
 
 export const lenkeTilInfoOmDigitaleSoknader =
     'https://www.nav.no/no/bedrift/tjenester-og-skjemaer/nav-og-altinn-tjenester/altinn-skjemaer-refusjoner-meldinger2/soknader-om-arbeidsmarkedstiltak-og-tilskudd-fra-nav';
@@ -113,6 +121,7 @@ export const LenkeTilKoronaSykeRefusjon = urlMedBedriftNr(
 
 export const tiltaksgjennomforingLink = gittMiljo({
     prod: 'https://arbeidsgiver.nav.no/tiltaksgjennomforing/?part=arbeidsgiver',
+    labs: 'https://arbeidsgiver.labs.nais.io/tiltaksgjennomforing/?part=arbeidsgiver',
     other: 'https://arbeidsgiver-q.nav.no/tiltaksgjennomforing/?part=arbeidsgiver',
 });
 
