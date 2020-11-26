@@ -34,7 +34,8 @@ if (isMockApp) {
     require('./mock/altinnMock');
     require('./mock/altinnMeldingsboksMock');
     require('./mock/unleashMock');
-    require('./mock/altinnBeOmTilgangMock')
+    require('./mock/altinnBeOmTilgangMock');
+    require('./mock/varslerMock');
 }
 
 if (isMockApp || environment.MILJO === 'dev-sbs' ) {

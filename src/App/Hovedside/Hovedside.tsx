@@ -14,8 +14,8 @@ import BrevFraAltinnContainer from './AltinnMeldingsboks/BrevFraAltinnContainer'
 import * as Record from '../../utils/Record'
 import { LinkableFragment } from '../../GeneriskeElementer/LinkableFragment';
 import Brodsmulesti from '../Brodsmulesti/Brodsmulesti';
+import Varsler from './varsler/Varsler';
 import './Hovedside.less';
-import Varselpanel from './Varselpanel/Varselpanel';
 
 const Hovedside: FunctionComponent<RouteComponentProps> = ({ history }) => {
     const { organisasjoner, visFeilmelding, tilgangTilSyfo, visSyfoFeilmelding } = useContext(OrganisasjonerOgTilgangerContext);
@@ -35,6 +35,7 @@ const Hovedside: FunctionComponent<RouteComponentProps> = ({ history }) => {
             <Brodsmulesti brodsmuler={[]} />
             <Banner sidetittel="Min side – arbeidsgiver" />
             <div className="hovedside-container">
+                <Varsler />
                 <div className="hovedside">
                     <FeilmeldingContainer
                         visFeilmelding={visFeilmelding}
@@ -50,7 +51,6 @@ const Hovedside: FunctionComponent<RouteComponentProps> = ({ history }) => {
                         <BeOmTilgang/>
                     </LinkableFragment>
                 </div>
-                <Varselpanel />
             </div>
         </>
     );
