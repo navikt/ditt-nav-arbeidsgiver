@@ -56,7 +56,6 @@ export const OrganisasjonsDetaljerProvider: FunctionComponent<Props> = ({ childr
 
         hentVarsler()
             .then((varsler: Varsel[]) => {
-                console.log('varsler fetch', varsler);
                 setVarsler(varsler);
             })
             .catch(() => {

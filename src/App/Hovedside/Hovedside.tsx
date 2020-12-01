@@ -17,6 +17,7 @@ import Brodsmulesti from '../Brodsmulesti/Brodsmulesti';
 import Varsler from './varsler/Varsler';
 import './Hovedside.less';
 import AdvarselBannerTestversjon from './AdvarselBannerTestVersjon/AdvarselBannerTestversjon';
+import { klokkeslett } from "./varsler/Varselpanel/dato-funksjoner";
 
 const Hovedside: FunctionComponent<RouteComponentProps> = ({ history }) => {
     const { organisasjoner, visFeilmelding, tilgangTilSyfo, visSyfoFeilmelding } = useContext(OrganisasjonerOgTilgangerContext);
