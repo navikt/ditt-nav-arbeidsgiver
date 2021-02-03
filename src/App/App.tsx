@@ -13,12 +13,13 @@ import { loggBrukerLoggetInn } from '../utils/funksjonerForAmplitudeLogging';
 import './App.less';
 
 const App: FunctionComponent = () => {
+
     useEffect(() => {
         loggBrukerLoggetInn();
     }, []);
 
     return (
-        <div className="typo-normal">
+        <div className="typo-normal bakgrunnsside">
             <BrowserRouter basename={basename}>
                 <Switch>
                     <Route
@@ -30,21 +31,19 @@ const App: FunctionComponent = () => {
                         <FeatureToggleProvider>
                             <OrganisasjonerOgTilgangerProvider>
                                 <OrganisasjonsDetaljerProvider>
-                                    <div className="bakgrunnsside">
-                                        <Switch>
-                                            <Route
-                                                path="/bedriftsinformasjon"
-                                                exact={true}
-                                                component={InformasjonOmBedrift}
-                                            />
-                                            <Route
-                                                path="/mangler-tilgang"
-                                                exact={true}
-                                                component={ManglerTilgangContainer}
-                                            />
-                                            <Route path="/" exact={true} component={Hovedside} />
-                                        </Switch>
-                                    </div>
+                                    <Switch>
+                                        <Route
+                                            path="/bedriftsinformasjon"
+                                            exact={true}
+                                            component={InformasjonOmBedrift}
+                                        />
+                                        <Route
+                                            path="/mangler-tilgang"
+                                            exact={true}
+                                            component={ManglerTilgangContainer}
+                                        />
+                                        <Route path="/" exact={true} component={Hovedside} />
+                                    </Switch>
                                 </OrganisasjonsDetaljerProvider>
                             </OrganisasjonerOgTilgangerProvider>
                         </FeatureToggleProvider>
