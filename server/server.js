@@ -23,6 +23,7 @@ const {
     API_GATEWAY = 'http://localhost:8080',
     APIGW_HEADER,
     DECORATOR_UPDATE_MS = 30 * 60 * 1000,
+    PROXY_LOG_LEVEL = 'info',
 } = process.env;
 const log = createLogger({
     transports: [
@@ -63,9 +64,9 @@ const startApiGWGauge = () => {
                 ...(APIGW_HEADER ? {headers: {'x-nav-apiKey': APIGW_HEADER}} : {})
             });
             gauge.set(res.ok ? 1 : 0);
-            log.info("healthcheck: ", gauge.name, res.ok);
+            log.info(`healthcheck: ${gauge.name} ${res.ok}`);
         } catch (error) {
-            log.error("healthcheck error:", gauge.name, error)
+            log.error(`healthcheck error: ${gauge.name} ${error}`)
             gauge.set(0);
         }
     }, 60 * 1000);
@@ -82,9 +83,18 @@ app.use('/*', (req, res, next) => {
     next();
 });
 app.use(
+    apiMetricsMiddleware({
+        metricsPath: '/min-side-arbeidsgiver/internal/metrics',
+    })
+);
+app.use(
     '/min-side-arbeidsgiver/api',
     createProxyMiddleware({
+        logLevel: PROXY_LOG_LEVEL,
         logProvider: _ => log,
+        onError: (err, req, res) => {
+            log.error(`${req.method} ${req.path} => [${res.statusCode}:${res.statusText}]: ${error.message}`);
+        },
         changeOrigin: true,
         pathRewrite: {
             '^/min-side-arbeidsgiver/api': '/ditt-nav-arbeidsgiver-api/api',
@@ -98,7 +108,11 @@ app.use(
 app.use(
     '/min-side-arbeidsgiver/syforest/arbeidsgiver/sykmeldte',
     createProxyMiddleware({
+        logLevel: PROXY_LOG_LEVEL,
         logProvider: _ => log,
+        onError: (err, req, res) => {
+            log.error(`${req.method} ${req.path} => [${res.statusCode}:${res.statusText}]: ${error.message}`);
+        },
         changeOrigin: true,
         target: NAIS_CLUSTER_NAME === "prod-sbs" ? "https://tjenester.nav.no" : "https://tjenester-q1.nav.no",
         pathRewrite: {
@@ -109,11 +123,6 @@ app.use(
     })
 );
 app.use('/min-side-arbeidsgiver/', express.static(BUILD_PATH, { index: false }));
-app.use(
-    apiMetricsMiddleware({
-        metricsPath: '/min-side-arbeidsgiver/internal/metrics',
-    })
-);
 
 app.get('/min-side-arbeidsgiver/redirect-til-login', (req, res) => {
     res.redirect(LOGIN_URL);
@@ -142,10 +151,10 @@ const serve = async () => {
             });
         });
         app.listen(PORT, () => {
-            log.info('Server listening on port ', PORT);
+            log.info(`Server listening on port ${PORT}`);
         });
     } catch (error) {
-        log.error('Server failed to start ', error);
+        log.error(`Server failed to start ${error}`);
         process.exit(1);
     }
 
@@ -154,10 +163,10 @@ const serve = async () => {
         getDecoratorFragments()
             .then(oppdatert => {
                 fragments = oppdatert;
-                log.info("dekoratør oppdatert:", Object.keys(oppdatert));
+                log.info(`dekoratør oppdatert: ${Object.keys(oppdatert)}`);
             })
             .catch(error => {
-                log.warn("oppdatering av dekoratør feilet:", error);
+                log.warn(`oppdatering av dekoratør feilet: ${error}`);
             });
     }, DECORATOR_UPDATE_MS);
 }
