@@ -11,6 +11,7 @@ import { FeatureToggleProvider } from '../FeatureToggleProvider';
 import { ManglerTilgangContainer } from './Hovedside/ManglerTilgangContainer/ManglerTilgangContainer';
 import { loggBrukerLoggetInn } from '../utils/funksjonerForAmplitudeLogging';
 import './App.less';
+import { AltinnMeldingsboksProvider } from './AltinnMeldingsboksProvider';
 
 const App: FunctionComponent = () => {
 
@@ -28,25 +29,27 @@ const App: FunctionComponent = () => {
                         component={InformasjonOmTilgangsstyringSide}
                     />
                     <LoginBoundary>
-                        <FeatureToggleProvider>
-                            <OrganisasjonerOgTilgangerProvider>
-                                <OrganisasjonsDetaljerProvider>
-                                    <Switch>
-                                        <Route
-                                            path="/bedriftsinformasjon"
-                                            exact={true}
-                                            component={InformasjonOmBedrift}
-                                        />
-                                        <Route
-                                            path="/mangler-tilgang"
-                                            exact={true}
-                                            component={ManglerTilgangContainer}
-                                        />
-                                        <Route path="/" exact={true} component={Hovedside} />
-                                    </Switch>
-                                </OrganisasjonsDetaljerProvider>
-                            </OrganisasjonerOgTilgangerProvider>
-                        </FeatureToggleProvider>
+                        <AltinnMeldingsboksProvider>
+                            <FeatureToggleProvider>
+                                <OrganisasjonerOgTilgangerProvider>
+                                    <OrganisasjonsDetaljerProvider>
+                                        <Switch>
+                                            <Route
+                                                path="/bedriftsinformasjon"
+                                                exact={true}
+                                                component={InformasjonOmBedrift}
+                                            />
+                                            <Route
+                                                path="/mangler-tilgang"
+                                                exact={true}
+                                                component={ManglerTilgangContainer}
+                                            />
+                                            <Route path="/" exact={true} component={Hovedside} />
+                                        </Switch>
+                                    </OrganisasjonsDetaljerProvider>
+                                </OrganisasjonerOgTilgangerProvider>
+                            </FeatureToggleProvider>
+                        </AltinnMeldingsboksProvider>
                     </LoginBoundary>
                 </Switch>
             </BrowserRouter>

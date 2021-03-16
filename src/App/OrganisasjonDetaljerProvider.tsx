@@ -7,6 +7,7 @@ import {
 import { autentiserAltinnBruker, hentMeldingsboks, Meldingsboks } from '../api/altinnApi';
 import { loggSidevisningOgTilgangsKombinasjonAvTjenestebokser } from '../utils/funksjonerForAmplitudeLogging';
 import { settBedriftIPam, hentAntallannonser } from '../api/pamApi';
+import { AltinnMeldingsboksContext } from './AltinnMeldingsboksProvider';
 
 interface Props {
     children: React.ReactNode;
@@ -22,7 +23,8 @@ export type Context = {
 export const OrganisasjonsDetaljerContext = React.createContext<Context>({} as Context);
 
 export const OrganisasjonsDetaljerProvider: FunctionComponent<Props> = ({ children }: Props) => {
-    const { organisasjoner, reporteeMessagesUrls, tilgangTilSyfo } = useContext(OrganisasjonerOgTilgangerContext);
+    const reporteeMessagesUrls = useContext(AltinnMeldingsboksContext)
+    const { organisasjoner, tilgangTilSyfo } = useContext(OrganisasjonerOgTilgangerContext);
     const [antallAnnonser, setantallAnnonser] = useState(-1);
     const [valgtOrganisasjon, setValgtOrganisasjon] = useState<OrganisasjonInfo | undefined>(undefined);
     const [altinnMeldingsboks, setAltinnMeldingsboks] = useState<Meldingsboks | undefined>(undefined);
@@ -38,6 +40,7 @@ export const OrganisasjonsDetaljerProvider: FunctionComponent<Props> = ({ childr
         } else {
             setantallAnnonser(0);
         }
+
 
         if (orgInfo.altinntilgang.tilskuddsbrev.tilgang === 'ja') {
             const messagesUrl = reporteeMessagesUrls[org.OrganizationNumber];

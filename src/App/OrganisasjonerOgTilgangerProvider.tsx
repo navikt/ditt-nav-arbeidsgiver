@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { hentOrganisasjoner, hentSyfoTilgang } from '../api/dnaApi';
 import { Organisasjon } from '../Objekter/Organisasjoner/OrganisasjonerFraAltinn';
-import { autentiserAltinnBruker, hentAltinnRaporteeIdentiteter, ReporteeMessagesUrls } from '../api/altinnApi';
 import * as Record from '../utils/Record';
 import { Tilgang, tilgangFromTruthy } from './LoginBoundary';
 import { AltinnTilgangssøknad, hentAltinntilganger, hentAltinnTilgangssøknader } from '../altinn/tilganger';
@@ -25,7 +24,6 @@ export type OrganisasjonInfo = {
 
 export type Context = {
     organisasjoner: Record<orgnr, OrganisasjonInfo>;
-    reporteeMessagesUrls: ReporteeMessagesUrls;
     visFeilmelding: boolean;
     tilgangTilSyfo: Tilgang;
     visSyfoFeilmelding: boolean;
@@ -38,7 +36,6 @@ export const OrganisasjonerOgTilgangerProvider: FunctionComponent = props => {
     const [altinntilganger, setAltinntilganger] = useState<Record<AltinntjenesteId, Set<string>> | undefined>(undefined);
     const [altinnTilgangssøknader, setAltinnTilgangssøknader] = useState<AltinnTilgangssøknad[] | undefined>(undefined);
 
-    const [reporteeMessagesUrls, setReporteeMessagesUrls] = useState<ReporteeMessagesUrls>({});
     const [tilgangTilSyfo, setTilgangTilSyfo] = useState(Tilgang.LASTER);
 
     const [visSyfoFeilmelding, setVisSyfoFeilmelding] = useState(false);
@@ -59,14 +56,6 @@ export const OrganisasjonerOgTilgangerProvider: FunctionComponent = props => {
                         gyldigeOrganisasjoner.map(org => [org.OrganizationNumber, org])
                     )
                 );
-                hentAltinnRaporteeIdentiteter().then(result => {
-                    if (result instanceof Error) {
-                        autentiserAltinnBruker(window.location.href);
-                        setReporteeMessagesUrls({});
-                    } else {
-                        setReporteeMessagesUrls(result);
-                    }
-                });
             })
             .catch(() => {
                 setAltinnorganisasjoner({});
@@ -129,7 +118,6 @@ export const OrganisasjonerOgTilgangerProvider: FunctionComponent = props => {
 
         const context: Context = {
             organisasjoner,
-            reporteeMessagesUrls,
             visFeilmelding,
             visSyfoFeilmelding,
             tilgangTilSyfo,
