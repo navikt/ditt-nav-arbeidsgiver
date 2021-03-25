@@ -124,6 +124,7 @@ const serve = async () => {
     try {
         fragments = await getDecoratorFragments();
         app.get('/min-side-arbeidsgiver/*', (req, res) => {
+            res.setHeader("referrer-policy", "origin-when-cross-origin");
             res.render('index.html', fragments, (err, html) => {
                 if (err) {
                     log.error(err);
