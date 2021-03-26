@@ -1,189 +1,145 @@
 import fetchMock from 'fetch-mock';
 const delay = new Promise(res => setTimeout(res, 500));
 
+const ballstadOgHamarøy = {
+    Name: 'BALLSTAD OG HAMARØY',
+    Type: 'Business',
+    OrganizationNumber: '811076732',
+    ParentOrganizationNumber: '811076112',
+    OrganizationForm: 'AAFY',
+    Status: 'Active',
+}
+
+const ballstadOgHorten = {
+    Name: 'BALLSTAD OG HORTEN',
+    Type: 'Enterprise',
+    ParentOrganizationNumber: null,
+    OrganizationNumber: '811076112',
+    OrganizationForm: 'FLI',
+    Status: 'Active',
+}
+
+const testAvAafy = {
+    Name: 'TEST AV AAFY ',
+    Type: 'Business',
+    OrganizationNumber: '973610015',
+    ParentOrganizationNumber: '971348593',
+    OrganizationForm: 'AAFY',
+    Status: 'Active',
+};
+
+const navEngerdal = {
+    Name: 'NAV ENGERDAL',
+    Type: 'Business',
+    ParentOrganizationNumber: '874652202',
+    OrganizationNumber: '991378642',
+    OrganizationForm: 'BEDR',
+    Status: 'Active',
+};
+
+const navHamar = {
+    Name: 'NAV HAMAR',
+    Type: 'Business',
+    ParentOrganizationNumber: '874652202',
+    OrganizationNumber: '990229023',
+    OrganizationForm: 'BEDR',
+    Status: 'Active',
+};
+
+const bjørnøyaOgRovdeRevisjon = {
+    Name: 'BJØRNØYA OG ROVDE REVISJON',
+    Type: 'Enterprise',
+    ParentOrganizationNumber: null,
+    OrganizationNumber: '810993472',
+    OrganizationForm: 'AS',
+    Status: 'Active',
+};
+
+const arendalOgBønesRevisjon = {
+    Name: 'ARENDAL OG BØNES REVISJON',
+    Type: 'Business',
+    ParentOrganizationNumber: '810993472',
+    OrganizationNumber: '810993502',
+    OrganizationForm: 'BEDR',
+    Status: 'Active',
+};
+
+const gravdalOgSolliaRevisjon = {
+    Name: 'GRAVDAL OG SOLLIA REVISJON',
+    Type: 'Business',
+    ParentOrganizationNumber: '810993472',
+    OrganizationNumber: '910993542',
+    OrganizationForm: 'BEDR',
+    Status: 'Active',
+};
+
+const storfosnaOgFredrikstadRegnskap = {
+    Name: 'STORFOSNA OG FREDRIKSTAD REGNSKAP',
+    Type: 'Business',
+    ParentOrganizationNumber: '910825550',
+    OrganizationNumber: '910825569',
+    OrganizationForm: 'AAFY',
+    Status: 'Active',
+};
+
+const tranøyOgSandreIVestfoldRegnskap = {
+    Name: 'TRANØY OG SANDE I VESTFOLD REGNSKAP',
+    Type: 'Enterprise',
+    ParentOrganizationNumber: '',
+    OrganizationNumber: '910825550',
+    OrganizationForm: 'FLI',
+    Status: 'Active',
+};
+
+const birtavarreOgVærlandetForelder = {
+    Name: 'BIRTAVARRE OG VÆRLANDET FORELDER',
+    Type: 'Enterprise',
+    OrganizationNumber: '910825555',
+    OrganizationForm: 'AS',
+    Status: 'Active',
+};
+
+const saltrødOgHøneby = {
+    Name: 'SALTRØD OG HØNEBY',
+    Type: 'Business',
+    OrganizationNumber: '999999999',
+    ParentOrganizationNumber: '910825555',
+    OrganizationForm: 'BEDR',
+    Status: 'Active',
+};
+
 export const OrganisasjonerResponse = [
-    {
-        Name: 'BALLSTAD OG HAMARØY',
-        Type: 'Business',
-        OrganizationNumber: '811076732',
-        ParentOrganizationNumber: '811076112',
-        OrganizationForm: 'AAFY',
-        Status: 'Active',
-    },
-    {
-        Name: 'BALLSTAD OG HORTEN',
-        Type: 'Enterprise',
-        ParentOrganizationNumber: null,
-        OrganizationNumber: '811076112',
-        OrganizationForm: 'FLI',
-        Status: 'Active',
-    },
-    {
-        Name: 'DIGITAL JUNKIES AS ',
-        Type: 'Business',
-        OrganizationNumber: '922658986',
-        ParentOrganizationNumber: '822565212',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-    },
-    {
-        Name: 'TEST AV AAFY ',
-        Type: 'Business',
-        OrganizationNumber: '973610015',
-        ParentOrganizationNumber: '971348593',
-        OrganizationForm: 'AAFY',
-        Status: 'Active',
-    },
-    {
-        Name: 'NAV ENGERDAL',
-        Type: 'Business',
-        ParentOrganizationNumber: '874652202',
-        OrganizationNumber: '991378642',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-    },
-    {
-        Name: 'NAV HAMAR',
-        Type: 'Business',
-        ParentOrganizationNumber: '874652202',
-        OrganizationNumber: '990229023',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-    },
-    {
-        Name: 'BJØRNØYA OG ROVDE REVISJON',
-        Type: 'Enterprise',
-        ParentOrganizationNumber: null,
-        OrganizationNumber: '810993472',
-        OrganizationForm: 'AS',
-        Status: 'Active',
-    },
-    {
-        Name: 'ARENDAL OG BØNES REVISJON',
-        Type: 'Business',
-        ParentOrganizationNumber: '810993472',
-        OrganizationNumber: '810993502',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-    },
-    {
-        Name: 'GRAVDAL OG SOLLIA REVISJON',
-        Type: 'Business',
-        ParentOrganizationNumber: '810993472',
-        OrganizationNumber: '910993542',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-    },
-    {
-        Name: 'STORFOSNA OG FREDRIKSTAD REGNSKAP',
-        Type: 'Business',
-        ParentOrganizationNumber: '910825550',
-        OrganizationNumber: '910825569',
-        OrganizationForm: 'AAFY',
-        Status: 'Active',
-    },
-    {
-        Name: 'TRANØY OG SANDE I VESTFOLD REGNSKAP',
-        Type: 'Enterprise',
-        ParentOrganizationNumber: '',
-        OrganizationNumber: '910825550',
-        OrganizationForm: 'FLI',
-        Status: 'Active',
-    },
-    {
-        Name: 'BIRTAVARRE OG VÆRLANDET FORELDER',
-        Type: 'Enterprise',
-        OrganizationNumber: '910825555',
-        OrganizationForm: 'AS',
-        Status: 'Active',
-      },
-      {
-        Name: 'SALTRØD OG HØNEBY',
-        Type: 'Business',
-        OrganizationNumber: '999999999',
-        ParentOrganizationNumber: '910825555',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-      }
+    ballstadOgHamarøy,
+    ballstadOgHorten,
+    testAvAafy,
+    navEngerdal,
+    navHamar,
+    bjørnøyaOgRovdeRevisjon,
+    arendalOgBønesRevisjon,
+    gravdalOgSolliaRevisjon,
+    storfosnaOgFredrikstadRegnskap,
+    tranøyOgSandreIVestfoldRegnskap,
+    birtavarreOgVærlandetForelder,
+    saltrødOgHøneby
 ];
 
-const organisasjonerMedRettigheter = [
-    '811076732',
-    '811076112',
-    '822565212',
-    '922658986',
-    '910825555',
-    '999999999',
+const rettigheterSkjemaDefaultResponse = [
+    ballstadOgHamarøy,
+    ballstadOgHorten,
+    birtavarreOgVærlandetForelder,
+    saltrødOgHøneby,
 ];
-const rettigheterSkjemaDefaultResponse = OrganisasjonerResponse
-    .filter(({OrganizationNumber}) => organisasjonerMedRettigheter.includes(OrganizationNumber));
 
 const mentortilskuddskjemaResponse = [
-    {
-        Name: 'BALLSTAD OG HAMARØY',
-        Type: 'Business',
-        OrganizationNumber: '811076732',
-        ParentOrganizationNumber: '811076112',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-    },
-    {
-        Name: 'BALLSTAD OG HORTEN',
-        Type: 'Enterprise',
-        OrganizationNumber: '811076112',
-        OrganizationForm: 'AS',
-        Status: 'Active',
-    },
-    {
-        Name: 'DIGITAL JUNKIES AS ',
-        Type: 'Enterprise',
-        OrganizationNumber: '822565212',
-        ParentOrganizationNumber: null,
-        OrganizationForm: 'AS',
-        Status: 'Active',
-    },
-    {
-        Name: 'DIGITAL JUNKIES AS ',
-        Type: 'Business',
-        OrganizationNumber: '922658986',
-        ParentOrganizationNumber: '822565212',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-    },
-    {
-        Name: 'NAV ENGERDAL',
-        Type: 'Business',
-        ParentOrganizationNumber: '874652202',
-        OrganizationNumber: '991378642',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-    },
-    {
-        Name: 'NAV HAMAR',
-        Type: 'Business',
-        ParentOrganizationNumber: '874652202',
-        OrganizationNumber: '990229023',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-    },
+    ballstadOgHamarøy,
+    ballstadOgHorten,
+    navEngerdal,
+    navHamar,
 ];
 
 const InntektsmeldingSkjemaResponse = [
-    {
-        Name: 'BALLSTAD OG HAMARØY',
-        Type: 'Business',
-        OrganizationNumber: '811076732',
-        ParentOrganizationNumber: '811076112',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-    },
-    {
-        Name: 'BALLSTAD OG HORTEN',
-        Type: 'Enterprise',
-        OrganizationNumber: '811076112',
-        OrganizationForm: 'AS',
-        Status: 'Active',
-    },
+    ballstadOgHamarøy,
+    ballstadOgHorten,
 ];
 
 export const mock = () => {
